@@ -3,11 +3,13 @@ export default function CourseStatus() {
     <div id="wd-course-status">
       <h2>Course Status</h2>
       <button>Unpublish</button> <button>Publish</button>
-      <button>Import Existing Content</button>
-      <button>Import from Commons</button>
-      <button>Choose Home Page</button>
-      <button>View Course Stream</button>
-      <button>New Announcements</button>
-      <button>New Analytics</button>
-      <button>View Course Notifications</button>
+      <ul id="wd-course-status">
+        <li><button>Import Existing Content</button></li>
+        <li><button>Import from Commons</button></li>
+        <li><button>Choose Home Page</button></li>
+        <li><button>View Course Stream</button></li>
+        <li><button>New Announcements</button></li>
+        <li><button>New Analytics</button></li>
+        <li><button>View Course Notifications</button></li>
+      </ul>
     </div> );}

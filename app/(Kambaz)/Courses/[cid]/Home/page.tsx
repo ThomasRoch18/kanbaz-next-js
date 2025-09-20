@@ -1,5 +1,5 @@
 import Modules from "../Modules/page";
-import CourseStatus from "./status";
+import CourseStatus from "./tatus";
 export default function Home() {
  return (
    <div id="wd-home">

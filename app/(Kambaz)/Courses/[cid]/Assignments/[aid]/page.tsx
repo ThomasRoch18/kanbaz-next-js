@@ -51,7 +51,8 @@ export default function AssignmentEditor() {
             </td>
         </tr><br />
         <tr>
-            <td align="right" valign="top">
+            <td></td>
+            <td align="left" valign="top">
                 <label htmlFor="wd-entry-options">Online Entry Options</label><br />
                 <input type="checkbox" name="check-entry" id="wd-text-entry"/>
                 <label htmlFor="wd-text-entry">Text Entry</label><br/>
@@ -70,31 +71,33 @@ export default function AssignmentEditor() {
             </td>
         </tr><br />
         <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-assign-to">Assign to</label>
-            </td>
-            <td>
+            <td></td>
+            <td align="left" valign="top">
+                <label htmlFor="wd-assign-to">Assign to</label><br />
                 <input id="wd-assign-to" defaultValue={"Everyone"} />
             </td>
         </tr>
         <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-due-date">Due</label>
+            <td></td>
+            <td align="left" valign="top">
+                <label htmlFor="wd-due-date">Due</label><br />
                 <input type="date" defaultValue="2025-05-13" id="wd-due-date"/>
             </td>
         </tr><br />
         <tr>
-            <td align="right" valign="top">
+            <td></td>
+            <td align="left" valign="top">
                 <label htmlFor="wd-available-from">Available From</label>
-            </td><br />
-            <td>
-                <label htmlFor="wd-available-to">Available To</label>
             </td>
-        </tr><br />
+            <td>
+                <label htmlFor="wd-available-to">Until</label>
+            </td>
+        </tr>
         <tr>
-            <td align="right" valign="top">
+            <td></td>
+            <td align="left" valign="top">
                 <input type="date" defaultValue="2025-05-06" id="wd-available-from"/>
-            </td><br />
+            </td>
             <td>
                 <input type="date" defaultValue="2025-05-13" id="wd-available-to"/>
             </td>

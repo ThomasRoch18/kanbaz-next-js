@@ -4,6 +4,8 @@ export default function Lab1() {
     return (
         <div id="wd-lab1">
             <h2>Lab 1</h2>
+            Thomas Roch, CS5610.18616.202610, Monday 6:00-9:00pm <br />
+            <a href="https://github.com/ThomasRoch18/kanbaz-next-js" id="wd-github">Github Repository</a>
             <h3>HTML Examples</h3>
             <div id="wd-h-tag">
                 <h4>Heading Tags</h4>

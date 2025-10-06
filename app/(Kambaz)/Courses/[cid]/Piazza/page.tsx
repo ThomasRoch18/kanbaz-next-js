@@ -1,4 +1,4 @@
-export default function Lab2() {
+export default function Piazza() {
   return (
     <div>
       <h2>Piazza</h2>

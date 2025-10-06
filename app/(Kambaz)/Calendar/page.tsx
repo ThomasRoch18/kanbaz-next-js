@@ -1,4 +1,4 @@
-export default function Lab2() {
+export default function Calendar() {
   return (
     <div>
       <h2>Calendar</h2>

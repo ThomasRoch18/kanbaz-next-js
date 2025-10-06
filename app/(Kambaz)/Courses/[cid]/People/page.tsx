@@ -1,4 +1,4 @@
-export default function Lab2() {
+export default function People() {
   return (
     <div>
       <h2>People</h2>

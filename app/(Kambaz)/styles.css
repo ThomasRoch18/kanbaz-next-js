@@ -13,3 +13,54 @@ body * {
     padding-left: 140px !important;
   }
 }
+
+.list-group.wd > .list-group-item.active {
+  color: black;
+  background-color: white;
+  border-left: 3px solid black !important;
+}
+
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+.wd-assignment-icon-left {
+    width: 5%;
+    float: left;
+    margin-top: 40px;
+}
+.wd-assignment-icon-left-right {
+    float: right;
+}
+.wd-assignment-content{
+    width: 80%;
+    float: left;
+    margin-top: 10px;
+}
+.wd-assignment-icon-right {
+    width: 5%;
+    float: right;
+    margin-top: 40px;
+}
+.wd-assignment-calendar-width {
+    width: 50%;
+}
+
+.wd-assignment-width {
+    width: 25rem;
+}
+.wd-account-width {
+    width: 25%;
+}

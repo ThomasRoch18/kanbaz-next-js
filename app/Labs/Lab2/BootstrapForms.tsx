@@ -76,7 +76,7 @@ export default function BootstrapForms() {
                     <FormLabel column sm={2}> Email </FormLabel>
                     <Col sm={10}> <FormControl type="email" placeholder="Email" /> </Col>
                 </Row>
-                <Row className="mb-3" controlId="formHorizontalPassword">
+                <Row className="mb-3" controlid="formHorizontalPassword">
                     <FormLabel column sm={2}> Password </FormLabel>
                     <Col sm={10}> <FormControl type="password" placeholder="Password" /> </Col>
                 </Row>

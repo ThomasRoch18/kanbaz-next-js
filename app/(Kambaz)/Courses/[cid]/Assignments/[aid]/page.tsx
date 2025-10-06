@@ -1,107 +1,83 @@
+import { Card, CardBody, CardText, CardTitle, Col, Container, FormControl, FormLabel, FormSelect, Row } from "react-bootstrap";
+
 export default function AssignmentEditor() {
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label><br />
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br />
-      <textarea id="wd-description" cols={30} rows={10}>
-        The assignment is available online Submit a link to the landing page of
-      </textarea>
-      <br />
-      <table>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
-          </td>
-          <td>
-            <input id="wd-points" defaultValue={100} />
-          </td>
-        </tr><br />
-        <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-group">Assignment Group</label>
-            </td>
-            <td>
-                <select id="wd-group">
-                    <option>ASSIGNMENTS</option>
-                    <option>QUIZZES</option>
-                    <option>EXAMS</option>
-                    <option>PROJECTS</option>
-                </select>
-            </td>
-        </tr><br />
-        <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-display-grade-as">Display Grade As</label>
-            </td>
-            <td>
-                <select id="wd-display-grade-as">
-                    <option>Percentage</option>
-                    <option>Points</option>
-                </select>
-            </td>
-        </tr><br />
-        <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-                <select id="wd-submission-type">
-                    <option>Online</option>
-                </select>
-            </td>
-        </tr><br />
-        <tr>
-            <td></td>
-            <td align="left" valign="top">
-                <label htmlFor="wd-entry-options">Online Entry Options</label><br />
-                <input type="checkbox" name="check-entry" id="wd-text-entry"/>
-                <label htmlFor="wd-text-entry">Text Entry</label><br/>
+    <Container id="wd-assignments-editor">
+      <FormLabel>Assignment Name</FormLabel>
+        <FormControl type="text" placeholder="A1" className="wd-assignment-width"/> <br />
+      <FormControl as="textarea" rows={10} className="wd-assignment-width"/> <br />
+      <Row className="mb-3" id="wd-points">
+            <FormLabel column sm={2} className="float-end"> Points </FormLabel>
+            <Col sm={10}>
+                <FormControl type="text" defaultValue="100" />
+            </Col>
+      </Row> <br />
+      <Row className="mb-3" id="wd-group">
+            <FormLabel column sm={2} className="float-end"> Assignment Group </FormLabel>
+            <Col sm={10}>
+                <FormSelect>
+                    <option value="0" defaultChecked>ASSIGNMENTS</option>
+                    <option value="1">QUIZZES</option>
+                    <option value="2">EXAMS</option>
+                    <option value="3">PROJECTS</option>
+                </FormSelect>
+            </Col>
+      </Row> <br />
+      <Row className="mb-3" id="wd-display-grade-as">
+            <FormLabel column sm={2} className="float-end"> Display Grade As </FormLabel>
+            <Col sm={10}>
+                <FormSelect>
+                    <option value="0" defaultChecked>Percentage</option>
+                    <option value="1">Points</option>
+                </FormSelect>
+            </Col>
+      </Row> <br />
+      <Row className="mb-3" id="wd-group">
+            <FormLabel column sm={2} className="float-end"> Submission Type </FormLabel>
+            <Col sm={10}>
+                <Card className="wd-assignment-width">
+                    <CardBody>
+                        <FormSelect>
+                            <option value="0" defaultChecked>Online</option>
+                        </FormSelect>
+                        <br />
+                        <label htmlFor="wd-entry-options">Online Entry Options</label><br />
+                            <input type="checkbox" name="check-entry" id="wd-text-entry"/>
+                            <label htmlFor="wd-text-entry">Text Entry</label><br/>
 
-                <input type="checkbox" name="check-entry" id="wd-website-url"/>
-                <label htmlFor="wd-website-url">Website URL</label><br/>
+                            <input type="checkbox" name="check-entry" id="wd-website-url"/>
+                            <label htmlFor="wd-website-url">Website URL</label><br/>
 
-                <input type="checkbox" name="check-entry" id="wd-media-recordings"/>
-                <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
+                            <input type="checkbox" name="check-entry" id="wd-media-recordings"/>
+                            <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
 
-                <input type="checkbox" name="check-entry" id="wd-student-annotation"/>
-                <label htmlFor="wd-student-annotation">Student Annotations</label><br />
+                            <input type="checkbox" name="check-entry" id="wd-student-annotation"/>
+                            <label htmlFor="wd-student-annotation">Student Annotations</label><br />
 
-                <input type="checkbox" name="check-entry" id="wd-file-upload"/>
-                <label htmlFor="wd-file-upload">File Uploads</label>
-            </td>
-        </tr><br />
-        <tr>
-            <td></td>
-            <td align="left" valign="top">
-                <label htmlFor="wd-assign-to">Assign to</label><br />
-                <input id="wd-assign-to" defaultValue={"Everyone"} />
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td align="left" valign="top">
-                <label htmlFor="wd-due-date">Due</label><br />
+                            <input type="checkbox" name="check-entry" id="wd-file-upload"/>
+                            <label htmlFor="wd-file-upload">File Uploads</label>
+                    </CardBody>
+                </Card>
+            </Col>
+      </Row> <br />
+      <Row className="mb-3" id="wd-assign-to">
+            <FormLabel column sm={2} className="float-end"> Assign </FormLabel>
+            <Card className="wd-assignment-width">
+                <h6>Assign To</h6>
+                <FormControl type="text" placeholder="Everyone" /> <br />
+                <label htmlFor="wd-due-date">Due</label>
                 <input type="date" defaultValue="2025-05-13" id="wd-due-date"/>
-            </td>
-        </tr><br />
-        <tr>
-            <td></td>
-            <td align="left" valign="top">
-                <label htmlFor="wd-available-from">Available From</label>
-            </td>
-            <td>
-                <label htmlFor="wd-available-to">Until</label>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td align="left" valign="top">
-                <input type="date" defaultValue="2025-05-06" id="wd-available-from"/>
-            </td>
-            <td>
-                <input type="date" defaultValue="2025-05-13" id="wd-available-to"/>
-            </td>
-        </tr>
-      </table>
-    </div>
+                <Row>
+                    <Col className="wd-assignment-calendar-width">
+                        <label htmlFor="wd-available-from">Available From</label><br />
+                        <input type="date" defaultValue="2025-05-06" id="wd-available-from"/>
+                    </Col>
+                    <Col className="wd-assignment-calendar-width">
+                        <label htmlFor="wd-available-to">Until</label><br />
+                        <input type="date" defaultValue="2025-05-13" id="wd-available-to"/>
+                    </Col>
+                </Row>
+            </Card>
+      </Row>
+    </Container>
 );}

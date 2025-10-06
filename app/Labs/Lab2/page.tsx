@@ -11,6 +11,7 @@ import Zindex from "./Zindex";
 import Float from "./Float";
 import GridLayout from "./GridLayout";
 import Flex from "./Flex";
+import ReactIconsSampler from "./ReactIcons";
 import BootstrapGrid from "./BootstrapGrid";
 import { Container } from "react-bootstrap";
 import ScreenSizeLabel from "./ScreenSizeLabel";
@@ -70,6 +71,7 @@ export default function Lab2() {
           </div>
         </div>
       </div>
+      <ReactIconsSampler />
       <ForegroundColors />
       <BackgroundColors />
       <Borders />

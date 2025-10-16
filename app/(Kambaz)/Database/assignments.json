@@ -1,0 +1,83 @@
+[
+  {
+    "_id": "A101",
+    "title": "Propulsion Assignment",
+    "course": "RS101",
+    "description": "Analyze the propulsion system performance using provided simulation data.",
+    "points": 100,
+    "available": "2025-09-01",
+    "due": "2025-09-10"
+  },
+  {
+    "_id": "A102",
+    "title": "Combustion Analysis",
+    "course": "RS101",
+    "description": "Complete a combustion efficiency analysis for liquid and solid propellants.",
+    "points": 75,
+    "available": "2025-09-11",
+    "due": "2025-09-18"
+  },
+  {
+    "_id": "A103",
+    "title": "Nozzle Design Project",
+    "course": "RS101",
+    "description": "Design a rocket nozzle and report on thrust optimization parameters.",
+    "points": 150,
+    "available": "2025-09-19",
+    "due": "2025-09-30"
+  },
+  {
+    "_id": "A201",
+    "title": "Aerodynamics Quiz",
+    "course": "RS102",
+    "description": "Short quiz covering basic aerodynamic principles and Bernoulli’s equation.",
+    "points": 50,
+    "available": "2025-09-05",
+    "due": "2025-09-06"
+  },
+  {
+    "_id": "A202",
+    "title": "Flow Analysis",
+    "course": "RS102",
+    "description": "Perform a computational flow analysis using CFD software.",
+    "points": 100,
+    "available": "2025-09-07",
+    "due": "2025-09-15"
+  },
+  {
+    "_id": "A203",
+    "title": "Heating Analysis",
+    "course": "RS102",
+    "description": "Evaluate heat transfer characteristics in a supersonic flow environment.",
+    "points": 125,
+    "available": "2025-09-16",
+    "due": "2025-09-25"
+  },
+  {
+    "_id": "A301",
+    "title": "Structural Design Task",
+    "course": "RS103",
+    "description": "Design a structural component to withstand orbital launch stresses.",
+    "points": 120,
+    "available": "2025-09-03",
+    "due": "2025-09-12"
+  },
+  {
+    "_id": "A302",
+    "title": "Orbital Calculations",
+    "course": "RS103",
+    "description": "Calculate orbital parameters and transfer orbits for a given payload.",
+    "points": 100,
+    "available": "2025-09-13",
+    "due": "2025-09-20"
+  },
+  {
+    "_id": "A303",
+    "title": "Systems Engineering Exam",
+    "course": "RS103",
+    "description": "Comprehensive exam covering systems design, integration, and testing processes.",
+    "points": 200,
+    "available": "2025-09-21",
+    "due": "2025-09-28"
+  }
+]

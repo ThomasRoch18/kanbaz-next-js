@@ -1,15 +1,22 @@
+"use client"
+import { useParams } from "next/navigation";
+import * as db from "../../../../Database";
 import { Card, CardBody, CardText, CardTitle, Col, Container, FormControl, FormLabel, FormSelect, Row } from "react-bootstrap";
+import Link from "next/link";
 
 export default function AssignmentEditor() {
+    const { cid, aid } = useParams();
+    const assignments = db.assignments;
+    const currentAssignment = assignments.find((assignment: any) => assignment._id === aid);
   return (
     <Container id="wd-assignments-editor">
       <FormLabel>Assignment Name</FormLabel>
-        <FormControl type="text" placeholder="A1" className="wd-assignment-width"/> <br />
-      <FormControl as="textarea" rows={10} className="wd-assignment-width"/> <br />
+        <FormControl type="text" placeholder={`${currentAssignment?.title}`} className="wd-assignment-width"/> <br />
+      <FormControl as="textarea" rows={10} className="wd-assignment-width" defaultValue={`${currentAssignment?.description}`}/> <br />
       <Row className="mb-3" id="wd-points">
             <FormLabel column sm={2} className="float-end"> Points </FormLabel>
             <Col sm={10}>
-                <FormControl type="text" defaultValue="100" />
+                <FormControl type="text" defaultValue={`${currentAssignment?.points}`} />
             </Col>
       </Row> <br />
       <Row className="mb-3" id="wd-group">
@@ -66,18 +73,26 @@ export default function AssignmentEditor() {
                 <h6>Assign To</h6>
                 <FormControl type="text" placeholder="Everyone" /> <br />
                 <label htmlFor="wd-due-date">Due</label>
-                <input type="date" defaultValue="2025-05-13" id="wd-due-date"/>
+                <input type="date" defaultValue={`${currentAssignment?.due}`} id="wd-due-date"/>
                 <Row>
                     <Col className="wd-assignment-calendar-width">
                         <label htmlFor="wd-available-from">Available From</label><br />
-                        <input type="date" defaultValue="2025-05-06" id="wd-available-from"/>
+                        <input type="date" defaultValue={`${currentAssignment?.available}`} id="wd-available-from"/>
                     </Col>
                     <Col className="wd-assignment-calendar-width">
                         <label htmlFor="wd-available-to">Until</label><br />
-                        <input type="date" defaultValue="2025-05-13" id="wd-available-to"/>
+                        <input type="date" defaultValue={`${currentAssignment?.due}`} id="wd-available-to"/>
                     </Col>
                 </Row>
             </Card>
+      </Row>
+      <Row className="mb-3">
+        <Col>
+            <Link href={`/Courses/${cid}/Assignments`} className="btn btn-secondary w-100 mb-2"> Cancel </Link>
+        </Col>
+        <Col>
+            <Link href={`/Courses/${cid}/Assignments`} className="btn btn-danger w-100 mb-2"> Save </Link>
+        </Col>
       </Row>
     </Container>
 );}

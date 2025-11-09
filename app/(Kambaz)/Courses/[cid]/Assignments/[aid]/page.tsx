@@ -1,98 +1,132 @@
-"use client"
-import { useParams } from "next/navigation";
-import * as db from "../../../../Database";
-import { Card, CardBody, CardText, CardTitle, Col, Container, FormControl, FormLabel, FormSelect, Row } from "react-bootstrap";
-import Link from "next/link";
+"use client";
+
+import { useParams, useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { addAssignment, updateAssignment } from "../reducer";
+import { Container, FormLabel, FormControl, Row, Col } from "react-bootstrap";
 
 export default function AssignmentEditor() {
-    const { cid, aid } = useParams();
-    const assignments = db.assignments;
-    const currentAssignment = assignments.find((assignment: any) => assignment._id === aid);
+  const { cid, aid } = useParams();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const existingAssignment = assignments.find((a: any) => a._id === aid);
+
+  const isEditing = aid && aid !== "new";
+
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    points: "",
+    due: "",
+    availableFrom: "",
+    availableUntil: "",
+  });
+
+  useEffect(() => {
+    if (isEditing && existingAssignment) {
+      setForm({
+        title: existingAssignment.title || "",
+        description: existingAssignment.description || "",
+        points: existingAssignment.points || "",
+        due: existingAssignment.due || "",
+        availableFrom: existingAssignment.availableFrom || "",
+        availableUntil: existingAssignment.availableUntil || "",
+      });
+    }
+  }, [isEditing, existingAssignment]);
+
+  const handleChange = (field: string, value: string) =>
+    setForm({ ...form, [field]: value });
+
+  const handleSave = () => {
+    if (isEditing) {
+      dispatch(updateAssignment({ _id: aid, ...form }));
+    } else {
+      dispatch(addAssignment({ ...form, course: cid }));
+    }
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+
+  const handleCancel = () => router.push(`/Courses/${cid}/Assignments`);
+
   return (
-    <Container id="wd-assignments-editor">
+    <Container>
+      <h3>{isEditing ? "Edit Assignment" : "New Assignment"}</h3>
+
       <FormLabel>Assignment Name</FormLabel>
-        <FormControl type="text" placeholder={`${currentAssignment?.title}`} className="wd-assignment-width"/> <br />
-      <FormControl as="textarea" rows={10} className="wd-assignment-width" defaultValue={`${currentAssignment?.description}`}/> <br />
-      <Row className="mb-3" id="wd-points">
-            <FormLabel column sm={2} className="float-end"> Points </FormLabel>
-            <Col sm={10}>
-                <FormControl type="text" defaultValue={`${currentAssignment?.points}`} />
-            </Col>
-      </Row> <br />
-      <Row className="mb-3" id="wd-group">
-            <FormLabel column sm={2} className="float-end"> Assignment Group </FormLabel>
-            <Col sm={10}>
-                <FormSelect>
-                    <option value="0" defaultChecked>ASSIGNMENTS</option>
-                    <option value="1">QUIZZES</option>
-                    <option value="2">EXAMS</option>
-                    <option value="3">PROJECTS</option>
-                </FormSelect>
-            </Col>
-      </Row> <br />
-      <Row className="mb-3" id="wd-display-grade-as">
-            <FormLabel column sm={2} className="float-end"> Display Grade As </FormLabel>
-            <Col sm={10}>
-                <FormSelect>
-                    <option value="0" defaultChecked>Percentage</option>
-                    <option value="1">Points</option>
-                </FormSelect>
-            </Col>
-      </Row> <br />
-      <Row className="mb-3" id="wd-group">
-            <FormLabel column sm={2} className="float-end"> Submission Type </FormLabel>
-            <Col sm={10}>
-                <Card className="wd-assignment-width">
-                    <CardBody>
-                        <FormSelect>
-                            <option value="0" defaultChecked>Online</option>
-                        </FormSelect>
-                        <br />
-                        <label htmlFor="wd-entry-options">Online Entry Options</label><br />
-                            <input type="checkbox" name="check-entry" id="wd-text-entry"/>
-                            <label htmlFor="wd-text-entry">Text Entry</label><br/>
+      <FormControl
+        type="text"
+        value={form.title}
+        onChange={(e) => handleChange("title", e.target.value)}
+      />
 
-                            <input type="checkbox" name="check-entry" id="wd-website-url"/>
-                            <label htmlFor="wd-website-url">Website URL</label><br/>
+      <FormLabel>Description</FormLabel>
+      <FormControl
+        as="textarea"
+        rows={5}
+        value={form.description}
+        onChange={(e) => handleChange("description", e.target.value)}
+      />
 
-                            <input type="checkbox" name="check-entry" id="wd-media-recordings"/>
-                            <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
-
-                            <input type="checkbox" name="check-entry" id="wd-student-annotation"/>
-                            <label htmlFor="wd-student-annotation">Student Annotations</label><br />
-
-                            <input type="checkbox" name="check-entry" id="wd-file-upload"/>
-                            <label htmlFor="wd-file-upload">File Uploads</label>
-                    </CardBody>
-                </Card>
-            </Col>
-      </Row> <br />
-      <Row className="mb-3" id="wd-assign-to">
-            <FormLabel column sm={2} className="float-end"> Assign </FormLabel>
-            <Card className="wd-assignment-width">
-                <h6>Assign To</h6>
-                <FormControl type="text" placeholder="Everyone" /> <br />
-                <label htmlFor="wd-due-date">Due</label>
-                <input type="date" defaultValue={`${currentAssignment?.due}`} id="wd-due-date"/>
-                <Row>
-                    <Col className="wd-assignment-calendar-width">
-                        <label htmlFor="wd-available-from">Available From</label><br />
-                        <input type="date" defaultValue={`${currentAssignment?.available}`} id="wd-available-from"/>
-                    </Col>
-                    <Col className="wd-assignment-calendar-width">
-                        <label htmlFor="wd-available-to">Until</label><br />
-                        <input type="date" defaultValue={`${currentAssignment?.due}`} id="wd-available-to"/>
-                    </Col>
-                </Row>
-            </Card>
-      </Row>
       <Row className="mb-3">
+        <FormLabel column sm={2}>Points</FormLabel>
+        <Col sm={10}>
+          <FormControl
+            type="number"
+            value={form.points}
+            onChange={(e) => handleChange("points", e.target.value)}
+          />
+        </Col>
+      </Row>
+
+      <Row className="mb-3">
+        <FormLabel column sm={2}>Due</FormLabel>
+        <Col sm={10}>
+          <input
+            type="date"
+            value={form.due}
+            onChange={(e) => handleChange("due", e.target.value)}
+          />
+        </Col>
+      </Row>
+
+      <Row className="mb-3">
+        <FormLabel column sm={2}>Available From</FormLabel>
+        <Col sm={10}>
+          <input
+            type="date"
+            value={form.availableFrom}
+            onChange={(e) => handleChange("availableFrom", e.target.value)}
+          />
+        </Col>
+      </Row>
+
+      <Row className="mb-3">
+        <FormLabel column sm={2}>Until</FormLabel>
+        <Col sm={10}>
+          <input
+            type="date"
+            value={form.availableUntil}
+            onChange={(e) => handleChange("availableUntil", e.target.value)}
+          />
+        </Col>
+      </Row>
+
+      <Row>
         <Col>
-            <Link href={`/Courses/${cid}/Assignments`} className="btn btn-secondary w-100 mb-2"> Cancel </Link>
+          <button className="btn btn-secondary w-100" onClick={handleCancel}>
+            Cancel
+          </button>
         </Col>
         <Col>
-            <Link href={`/Courses/${cid}/Assignments`} className="btn btn-danger w-100 mb-2"> Save </Link>
+          <button className="btn btn-danger w-100" onClick={handleSave}>
+            Save
+          </button>
         </Col>
       </Row>
     </Container>
-);}
+  );
+}

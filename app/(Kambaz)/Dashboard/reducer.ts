@@ -29,8 +29,11 @@ export const enrollmentsSlice = createSlice({
     unenrollFromCourse: (state, action: PayloadAction<{ userId: string; courseId: string }>) => {
       state.enrollments = state.enrollments.filter(e => !(e.user === action.payload.userId && e.course === action.payload.courseId));
     },
+    setEnrollments: (state, { payload: enrollments }) => {
+     state.enrollments = enrollments;
+   },
   },
 });
 
-export const { enrollInCourse, unenrollFromCourse } = enrollmentsSlice.actions;
+export const { enrollInCourse, unenrollFromCourse, setEnrollments } = enrollmentsSlice.actions;
 export default enrollmentsSlice.reducer;

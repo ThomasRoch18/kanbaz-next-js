@@ -1,6 +1,5 @@
 "use client"
 import { useRouter, useParams } from "next/navigation";
-import * as db from "../../../Database";
 import Link from "next/link";
 import { Button, Col, Container, FormControl, FormLabel, InputGroup, ListGroup, ListGroupItem, Modal, Row } from "react-bootstrap";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
@@ -11,9 +10,10 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { deleteAssignment } from "./reducer";
+import { useEffect, useState } from "react";
+import { deleteAssignment, setAssignments } from "./reducer";
 import { RootState } from "../../../store";
+import * as client from "../../client"
 export default function Assignments() {
   const { cid } = useParams();
   const router = useRouter();
@@ -29,8 +29,9 @@ export default function Assignments() {
     setShowModal(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (assignmentToDelete) {
+      onRemoveAssignment(assignmentToDelete);
       dispatch(deleteAssignment(assignmentToDelete));
     }
     setShowModal(false);
@@ -41,6 +42,17 @@ export default function Assignments() {
     setShowModal(false);
     setAssignmentToDelete(null);
   };
+  const fetchAssignments = async () => {
+      const assignments = await client.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(assignments));
+    };
+    useEffect(() => {
+      fetchAssignments();
+    }, []);
+    const onRemoveAssignment = async (assignmentId: string) => {
+      await client.deleteAssignment(assignmentId);
+      dispatch(setAssignments(assignments.filter((m: any) => m._id !== assignmentId)));
+    };
   return (
     <Container id="wd-assignments">
       <InputGroup size="lg" className="me-1 float-start" id="wd-search-assignment" style={{width: "300px"}}>
@@ -68,7 +80,6 @@ export default function Assignments() {
             </div>
           <ListGroup className="wd-lessons rounded-0">
             {assignments
-              .filter((assignment: any) => assignment.course === cid)
               .map((assignment: any) => (<ListGroupItem className="wd-lesson p-3 ps-1">
               <div className="wd-assignment-icon-left">
                 <Col><BsGripVertical className="me-2 fs-3" /></Col>

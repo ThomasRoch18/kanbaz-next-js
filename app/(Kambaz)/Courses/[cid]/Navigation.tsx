@@ -25,7 +25,7 @@ export default function CourseNavigation({ children, params }: Props) {
     { label: "Assignments", path: `/Courses/${cid}/Assignments` },
     { label: "Quizzes", path: `/Courses/${cid}/Quizzes` },
     { label: "Grades", path: `/Courses/${cid}/Grades` },
-    { label: "People", path: `/Courses/${cid}/People/Table` },
+    { label: "People", path: `/Courses/${cid}/People` },
   ];
 
   return (

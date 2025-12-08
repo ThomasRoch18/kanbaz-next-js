@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../store";
 import * as client from "../../../../client";
 import { Button, Container, Card } from "react-bootstrap";
@@ -13,6 +13,7 @@ import { setQuizzes, setQuiz } from "../../reducer";
 export default function QuizDetails() {
   const { cid, qid } = useParams();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { currentUser } = useSelector((state: RootState) => state.accountReducer);
   const isStudent = (currentUser as any)?.role === "STUDENT";
@@ -20,16 +21,35 @@ export default function QuizDetails() {
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
 
   console.log(quizzes);
-  const quiz = Array.isArray(quizzes)
+
+const fetchQuizzes = async () => {
+          const quizzes = await client.findQuizzesForCourse(cid as string);
+          dispatch(setQuizzes(quizzes));
+        };
+        useEffect(() => {
+          fetchQuizzes();
+        }, []);
+
+const quiz = Array.isArray(quizzes)
   ? quizzes.find((q: any) => q._id === qid)
   : null;
 
-  const [isPublished, setPublishedStatus] = useState(quiz.published); 
+console.log("Quizzes from Redux:", quizzes);
+console.log("Existing quiz:", quiz);
+// console.log("qid:", qid);
+
+useEffect(() => {
+  if (!quiz) return;});
+
+const [isPublished, setPublishedStatus] = useState(false); 
+
    useEffect(() => {
-      setPublishedStatus(quiz.published);
-  }, [quiz]);
+  if (quiz) {
+    setPublishedStatus(quiz.published);
+  }
+}, [quiz]);
   
-  console.log(quiz);
+  //console.log(quiz);
   const [grade, setGrade] = useState<number | null>(null);
 
 
@@ -46,12 +66,22 @@ export default function QuizDetails() {
     loadGrade();
   }, [qid]);
 
-  if (!quiz) return <Container>Loading...</Container>;
+  useEffect(() => {
+  if (!quiz) {
+    const timer = setTimeout(() => router.refresh(), 100);
+    return () => clearTimeout(timer);
+  }
+}, [quiz, router]);
 
   // ---- Availability Status ----
   const now = new Date();
-  const availableDate = quiz.available ? new Date(quiz.available) : null;
-  const untilDate = quiz.until ? new Date(quiz.until) : null;
+  let availableDate: Date | null = null;
+  let untilDate: Date | null = null;
+
+if (quiz) {
+  availableDate = quiz.available ? new Date(quiz.available) : null;
+  untilDate = quiz.until ? new Date(quiz.until) : null;
+}
 
   let availabilityMessage = "Available";
   if (availableDate && now < availableDate) {
@@ -77,6 +107,10 @@ export default function QuizDetails() {
     published: updated.published,
   }));
   };
+
+  if (!quiz) {
+  return <div>Loading...</div>;
+}
 
   return (
     <Container className="mt-4">
@@ -119,7 +153,7 @@ export default function QuizDetails() {
             variant="primary"
             size="lg"
             onClick={() =>
-              router.push(`/Courses/${cid}/Quizzes/${qid}/Take`)
+              router.push(`/Courses/${cid}/Quizzes/${qid}/QuizPreview`)
             }
             disabled={!quiz.published}
           >
@@ -153,3 +187,4 @@ export default function QuizDetails() {
     </Container>
   );
 }
+

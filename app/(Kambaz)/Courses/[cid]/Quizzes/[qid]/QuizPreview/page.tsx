@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Container, Button, Card, Form } from "react-bootstrap";
 import * as client from "../../../../client";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function QuizPreview() {
   const { cid, qid } = useParams();
@@ -19,6 +20,8 @@ export default function QuizPreview() {
 
   const [index, setIndex] = useState(0);   // <-- CURRENT QUESTION INDEX
 
+  // console.log(currentUser._id);
+  // console.log(qid);
   // Load quiz data
   useEffect(() => {
     const loadQuiz = async () => {
@@ -26,6 +29,7 @@ export default function QuizPreview() {
       setQuiz(data);
 
       if (isStudent) {
+
         const existingAttempt = await client.findAttemptForUser(
           currentUser._id,
           qid as string
@@ -53,6 +57,7 @@ export default function QuizPreview() {
   // Submit for students
   const submit = async () => {
     const attempt = {
+      _id: uuidv4(),
       quiz: quiz._id,
       user: currentUser._id,
       answers,

@@ -26,6 +26,8 @@ export default function Quizzes() {
     const [grades, setGrades] = useState<any>({});
     const [openMenuFor, setOpenMenuFor] = useState<string | null>(null);
 
+    console.log(quizzes);
+
     const toggleMenu = (qid: string) => {
       setOpenMenuFor(openMenuFor === qid ? null : qid);
     };
@@ -36,6 +38,8 @@ export default function Quizzes() {
         useEffect(() => {
           fetchQuizzes();
         }, []);
+
+        console.log(quizzes);
     const togglePublish = async (quiz: any) => {
         let updated;
         if (quiz.published) {
@@ -62,6 +66,11 @@ export default function Quizzes() {
   };
   loadGrades();
 }, [quizzes]);
+
+const visibleQuizzes = isStudent
+  ? quizzes.filter((q: any) => q.published)
+  : quizzes;
+
   return (
     <Container id="wd-quizzes">
       <InputGroup size="lg" className="me-1 float-start" id="wd-search-assignment" style={{width: "300px"}}>
@@ -93,7 +102,7 @@ export default function Quizzes() {
                 No quizzes yet. Click <strong>+ Quiz</strong> to create one.
               </div>
             ) :
-            (quizzes
+            (visibleQuizzes
               .map((quiz: any) => (<ListGroupItem className="wd-lesson p-3 ps-1">
               <div className="wd-assignment-icon-left">
                 <Col><BsGripVertical className="me-2 fs-3" /></Col>
@@ -101,9 +110,9 @@ export default function Quizzes() {
                 </div>
               <div className="wd-assignment-content">
                 <Link href={`/Courses/${cid}/Quizzes/${quiz._id}/QuizDetails`} className="wd-assignment-link" >{quiz.title}</Link>
-                <p>{quiz.questions?.length ?? 0} | {isStudent && <p>Score: {grades[quiz._id] ?? "—"}</p>}</p>
-              <br />
-              <p> {quiz.dueDate} | {quiz.points} | <br /> {quiz.availableDate} | {quiz.untilDate} </p>
+                <p>Questions: {quiz.questions?.length ?? 0} | {isStudent && <p>Score: {grades[quiz._id] ?? "—"}</p>}</p>
+              
+              <p> Due: {quiz.dueDate} | Points: {quiz.points} | <br /> Available: {quiz.availableDate} | Until: {quiz.untilDate} </p>
               </div>
               <div className="wd-assignment-icon-right">
                 {!isStudent && openMenuFor === quiz._id && (

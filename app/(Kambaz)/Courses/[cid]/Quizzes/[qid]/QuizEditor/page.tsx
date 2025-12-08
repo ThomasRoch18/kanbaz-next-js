@@ -79,7 +79,7 @@ export default function QuizEditorDetails() {
 
 const handleSaveAndPublish = async () => {
   if (isEditing) {
-    await onUpdateQuiz({ ...form, _id: qid, published: true });
+    await onUpdateQuiz({ ...form, _id: qid });
   } else {
     await onCreateQuiz(true);
   }

@@ -38,7 +38,6 @@ export default function QuestionsTab() {
   }
 }, [existingQuiz]);
 
-  // --- Editing state functions ---
   const startEdit = (idx: number) => {
     setQuestions((prev: any[]) =>
       prev.map((q, i) => i === idx ? { ...q, _editing: true } : q)
@@ -56,10 +55,8 @@ export default function QuestionsTab() {
     prev.map((q, i) => {
       if (i !== idx) return q;
 
-      // Always keep all fields
       let updated = { ...q, [field]: value };
 
-      // Handle type change (replace answers)
       if (field === "type") {
         if (value === "mc") {
           updated = {
@@ -94,7 +91,6 @@ export default function QuestionsTab() {
   );
 };
 
-  // --- Question CRUD ---
   const handleAddQuestion = async () => {
     const newQuestion = {
       _id: "temp-",
@@ -107,7 +103,6 @@ export default function QuestionsTab() {
         { _id: uuidv4(), description: "Option 2", correct: false, _editing: false }
       ]
     };
-    // const saved = await client.createQuizQuestion(qid as string, newQuestion);
     setQuestions((prev: any) => [...prev, { ...newQuestion, _editing: true }]);
   };
 
@@ -129,10 +124,8 @@ export default function QuestionsTab() {
   };
   console.log(payload);
   if (isNew) {
-    // CREATE new question
     await client.createQuizQuestion(qid as string, payload);
   } else {
-    // UPDATE existing question
     await client.updateQuizQuestion(qid as string, q._id, payload);
   }
 
@@ -147,7 +140,6 @@ export default function QuestionsTab() {
     setQuestions((prev: any[]) => prev.filter(q => q._id !== questionId));
   };
 
-  // --- Answer CRUD ---
   const editAnswer = (qIdx: number, aIdx: number) => {
   setQuestions((prev: any[]) =>
     prev.map((q, qi) =>
@@ -240,7 +232,6 @@ export default function QuestionsTab() {
       router.push(`/Courses/${cid}/Quizzes`);
     };
 
-  // --- Total points ---
   const totalPoints = questions.reduce((sum: any, q: { points: any; }) => sum + (q.points || 0), 0);
 
   return (
@@ -319,7 +310,7 @@ export default function QuestionsTab() {
                       <Form.Label>Points</Form.Label>
                       <Form.Control type="number" value={q.points} onChange={(e) => updateQuestionField(idx, "points", Number(e.target.value))} />
                     </Form.Group>
-                    {/* --- True / False --- */}
+
                     {q.answers && q.type === "tf" && (
                       <>
                         <Form.Label>Correct Answer</Form.Label>
@@ -390,7 +381,6 @@ export default function QuestionsTab() {
                       </>
                     )}
 
-                    {/* --- Fill in the Blank --- */}
                     {q.answers && q.type === "fitb" && (
                       <>
                         <Form.Label>Accepted Answers</Form.Label>
@@ -421,6 +411,7 @@ export default function QuestionsTab() {
                         <Button variant="outline-primary" onClick={() => handleAddAnswer(idx)}>Add Answer</Button>
                       </>
                     )}
+
                     {q.answers && q.type === "mc" && (
                       <>
                         <Form.Label>Options</Form.Label>
@@ -519,7 +510,7 @@ export default function QuestionsTab() {
           </ListGroup.Item>
         ))}
       </ListGroup>
-      {/* BUTTONS */}
+
             <Row className="mt-4">
               <Col>
                 <button className="btn btn-secondary w-100" onClick={handleCancel}>

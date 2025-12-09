@@ -48,7 +48,6 @@ export default function Quizzes() {
           updated = await client.publishQuiz(quiz._id);
         }
 
-        // Update Redux state with the updated quiz
         dispatch(
           setQuizzes(quizzes.map((q: any) => q._id === quiz._id ? updated : q))
         );

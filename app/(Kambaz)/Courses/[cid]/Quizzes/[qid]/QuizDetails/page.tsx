@@ -73,7 +73,6 @@ const [isPublished, setPublishedStatus] = useState(false);
   }
 }, [quiz, router]);
 
-  // ---- Availability Status ----
   const now = new Date();
   let availableDate: Date | null = null;
   let untilDate: Date | null = null;
@@ -90,7 +89,6 @@ if (quiz) {
     availabilityMessage = "Closed";
   }
 
-  // ---- Publishing ----
   const togglePublish = async () => {
     let updated;
     if (isPublished) {
@@ -116,7 +114,6 @@ if (quiz) {
     <Container className="mt-4">
       <h2 className="mb-3">{quiz.name}</h2>
 
-      {/* Status + Publish Control */}
       {!isStudent && (
         <div className="mb-3">
           {isPublished ? (
@@ -146,7 +143,6 @@ if (quiz) {
         <strong>Published:</strong> {quiz.published ? "Yes" : "No"}
       </div>
 
-      {/* Buttons */}
       <div className="d-flex gap-3">
         {isStudent ? (
           <Button

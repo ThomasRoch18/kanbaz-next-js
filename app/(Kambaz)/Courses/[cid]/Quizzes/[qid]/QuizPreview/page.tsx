@@ -18,11 +18,10 @@ export default function QuizPreview() {
   const [answers, setAnswers] = useState<any>({});
   const [submittedAttempt, setSubmittedAttempt] = useState<any>(null);
 
-  const [index, setIndex] = useState(0);   // <-- CURRENT QUESTION INDEX
+  const [index, setIndex] = useState(0);
 
   // console.log(currentUser._id);
   // console.log(qid);
-  // Load quiz data
   useEffect(() => {
     const loadQuiz = async () => {
       const data = await client.findQuizById(qid as string);
@@ -46,15 +45,13 @@ export default function QuizPreview() {
 
   if (!quiz) return <Container>Loading...</Container>;
 
-  const q = quiz.questions[index]; // <-- CURRENT QUESTION
+  const q = quiz.questions[index]; 
 
-  // Student chooses an answer (faculty cannot)
   const selectAnswer = (questionId: string, choiceIndex: any) => {
     if (!isStudent || submittedAttempt) return;
     setAnswers({ ...answers, [questionId]: choiceIndex });
   };
 
-  // Submit for students
   const submit = async () => {
     const attempt = {
       _id: uuidv4(),
@@ -66,7 +63,6 @@ export default function QuizPreview() {
     setSubmittedAttempt(saved);
   };
 
-  // Navigation
   const previous = () => setIndex((i) => Math.max(i - 1, 0));
   const next = () =>
     setIndex((i) => Math.min(i + 1, quiz.questions.length - 1));
@@ -85,7 +81,6 @@ export default function QuizPreview() {
         </Card>
       )}
 
-      {/* ---------------------------- QUESTION CARD ---------------------------- */}
       <Card className="p-4 mb-4">
         <h4>
           Question {index + 1} of {quiz.questions.length}
@@ -94,7 +89,6 @@ export default function QuizPreview() {
         <p className="fw-bold mt-3">{q.title}</p>
         <p>{q.description}</p>
 
-        {/* -------- Multiple Choice -------- */}
         {q.type === "mc" &&
           q.answers.map((a: any, aIdx: number) => (
             <Form.Check
@@ -108,7 +102,6 @@ export default function QuizPreview() {
             />
           ))}
 
-        {/* -------- True / False -------- */}
         {q.type === "tf" &&
           q.answers.map((a: any, aIdx: number) => (
             <Form.Check
@@ -122,7 +115,6 @@ export default function QuizPreview() {
             />
           ))}
 
-        {/* -------- Fill In The Blank -------- */}
         {q.type === "fitb" && (
           <Form.Control
             className="mt-2"
@@ -134,7 +126,6 @@ export default function QuizPreview() {
           />
         )}
 
-        {/* If submitted, show correct answers */}
         {submittedAttempt && (
           <div className="mt-3">
             <div className="fw-bold">Correct Answer:</div>
@@ -149,7 +140,6 @@ export default function QuizPreview() {
         )}
       </Card>
 
-      {/* ---------------------------- NAV BUTTONS ---------------------------- */}
       <div className="d-flex justify-content-between mb-4">
         <Button disabled={index === 0} onClick={previous}>
           Previous
@@ -163,9 +153,7 @@ export default function QuizPreview() {
         </Button>
       </div>
 
-      {/* ---------------------------- FOOTER BUTTONS ---------------------------- */}
       <div className="mt-2 d-flex gap-3">
-        {/* Edit button for Faculty */}
         {!isStudent && (
           <Button
             variant="secondary"
@@ -177,14 +165,12 @@ export default function QuizPreview() {
           </Button>
         )}
 
-        {/* Submit for students */}
         {isStudent && !submittedAttempt && (
           <Button variant="success" onClick={submit}>
             Submit Quiz
           </Button>
         )}
 
-        {/* Back */}
         <Button
           variant="outline-secondary"
           onClick={() => router.push(`/Courses/${cid}/Quizzes`)}

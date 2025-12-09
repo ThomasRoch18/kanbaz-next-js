@@ -41,7 +41,6 @@ export default function QuizEditorDetails() {
     untilDate: "",
   });
 
-  // Load existing quiz form data
   useEffect(() => {
     //console.log(quizzes)
       const load = async () => { 
@@ -94,7 +93,6 @@ const onCreateQuiz = async (publish = false) => {
   published: publish,
   questions: existingQuiz?.questions || [],
 
-  // fields from form or defaults
   title: form.title,
   description: form.description,
   points: form.points ?? 0,
@@ -110,7 +108,7 @@ const onCreateQuiz = async (publish = false) => {
   
   dispatch(setQuiz(created));
 
-  return created; // so caller knows new quiz id
+  return created; 
 };
 
 const onUpdateQuiz = async (quiz: any) => {
@@ -139,7 +137,6 @@ const onUpdateQuiz = async (quiz: any) => {
     <Container>
       <h3>{isEditing ? "Edit Quiz Details" : "New Quiz"}</h3>
 
-      {/* TITLE */}
       <FormLabel>Quiz Title</FormLabel>
       <Button
         variant="primary"
@@ -154,7 +151,6 @@ const onUpdateQuiz = async (quiz: any) => {
         onChange={(e) => handleChange("title", e.target.value)}
       />
 
-      {/* DESCRIPTION */}
       <FormLabel>Description</FormLabel>
       <FormControl
         as="textarea"
@@ -163,7 +159,6 @@ const onUpdateQuiz = async (quiz: any) => {
         onChange={(e) => handleChange("description", e.target.value)}
       />
 
-      {/* POINTS */}
       <Row className="mb-3">
         <FormLabel column sm={2}>Points</FormLabel>
         <Col sm={10}>
@@ -175,7 +170,6 @@ const onUpdateQuiz = async (quiz: any) => {
         </Col>
       </Row>
 
-      {/* SHUFFLE ANSWERS */}
       <Row className="mb-3">
         <Col>
           <FormCheck
@@ -187,7 +181,6 @@ const onUpdateQuiz = async (quiz: any) => {
         </Col>
       </Row>
 
-      {/* TIME LIMIT */}
       <Row className="mb-3">
         <Col>
           <FormCheck
@@ -212,7 +205,6 @@ const onUpdateQuiz = async (quiz: any) => {
         </Row>
       )}
 
-      {/* DATES */}
       <Row className="mb-3">
         <FormLabel column sm={2}>Due Date</FormLabel>
         <Col sm={10}>
@@ -246,7 +238,6 @@ const onUpdateQuiz = async (quiz: any) => {
         </Col>
       </Row>
 
-      {/* BUTTONS */}
       <Row className="mt-4">
         <Col>
           <button className="btn btn-secondary w-100" onClick={handleCancel}>
